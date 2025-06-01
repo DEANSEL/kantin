@@ -1,0 +1,48 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+CREATE TABLE `kantin` (
+  `id` int(10) NOT NULL,
+  `nama` varchar(50) NOT NULL,
+  `deskripsi` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `kantin` (`id`, `nama`, `deskripsi`) VALUES
+(1, 'Warung Bu Eka', 'Jual Makanan'),
+(2, 'Warung Mas Riki', 'Jual Makanan'),
+(3, 'Warjok', 'Jual Minuman'),
+(4, 'Kantin Rika', 'Jual Minuman');
+
+CREATE TABLE `menu` (
+  `id` int(10) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `harga` int(50) NOT NULL,
+  `stok` int(11) NOT NULL,
+  `gambar` varchar(100) NOT NULL,
+  `id_kantin` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+INSERT INTO `menu` (`id`, `nama`, `harga`, `stok`, `gambar`, `id_kantin`) VALUES
+(1, 'Indomie', 7000, 10, 'mie.jpg', 1),
+(2, 'Batagor', 10000, 10, 'batagor.jpg', 2),
+(3, 'Es Teh', 5000, 10, 'esteh.jpg', 3),
+(4, 'Air Mineral', 3000, 10, 'mineral.jpg', 4);
+
+ALTER TABLE `kantin`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `menu`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_kantin` (`id_kantin`);
+
+ALTER TABLE `kantin`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+ALTER TABLE `menu`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+ALTER TABLE `menu`
+  ADD CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`id_kantin`) REFERENCES `kantin` (`id`);
+COMMIT;
